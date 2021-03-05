@@ -80,7 +80,7 @@ void setup()
   // Connect to semilimes server
   client.connect(websockets_connection_string);
 
-  String Body = "This message from ESP32 using the wss Semilimes libs";
+  String Body = "This message from esp using the wss Semilimes libs";
   client.send(semilimes.SendTextMessage(myToken, ChannelId, Body));
 }
 
