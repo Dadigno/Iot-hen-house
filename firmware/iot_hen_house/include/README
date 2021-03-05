@@ -1,4 +1,30 @@
 
+Create in this directory secret.h containing this:
+
+------------------------------------------------
+
+
+#ifndef secret_h
+#define secret_h
+
+#include <Arduino.h>
+
+//WiFi
+const char* ssid = "Your Wifi SSID";
+const char* password = "Your Wifi pwd";
+
+//Semilimes
+String myToken = "Enter your Token Here";
+String ChannelId = "Enter the Channel ID";
+
+
+#endif
+
+
+------------------------------------------------
+
+The following is from platformIo:
+
 This directory is intended for project header files.
 
 A header file is a file containing C declarations and macro definitions
