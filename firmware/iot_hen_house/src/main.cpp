@@ -3,7 +3,8 @@
 #include <WiFi.h>
 #include <semilimes.h>
 #include "secret.h" // import wifi credentials, token and channel ID
-#include <utils.h>
+#include <circular_buffer.h>
+#include <Arduino_JSON.h>
 
 #define WIFI_CONN_TIMEOUT 10 //Sec
 
@@ -14,11 +15,16 @@ WebsocketsClient client;
 
 const char *websockets_connection_string = semilimes_wss_server;
 
+circular_buffer<semilimes_message_t> msg_buf(10);
+
 void onMessageCallback(WebsocketsMessage message)
 {
   Serial.print("Got Message: ");
   Serial.println(message.data());
-  JSON_decode(message.data());
+
+  //semilimes_message_t new_message;
+  //new_message = JSON_decode(message.data(), false);
+  //msg_buf.put(new_message);
 }
 
 void onEventsCallback(WebsocketsEvent event, String data)
@@ -62,29 +68,44 @@ boolean init_wifi()
     }
   }
 
-  // run callback when messages are received
-  client.onMessage(onMessageCallback);
-
-  // run callback when events are occuring
-  client.onEvent(onEventsCallback);
   return true;
 }
 
 void setup()
 {
   Serial.begin(115200);
+  Serial.println("Hello World");
 
   while (!init_wifi())
     ;
 
+  // run callback when messages are received
+  client.onMessage(onMessageCallback);
+
+  // run callback when events are occuring
+  client.onEvent(onEventsCallback);
+
   // Connect to semilimes server
   client.connect(websockets_connection_string);
 
-  String Body = "This message from esp using the wss Semilimes libs";
+  String Body = "This message from ESP32 using the wss Semilimes libs";
   client.send(semilimes.SendTextMessage(myToken, ChannelId, Body));
+
 }
 
 void loop()
 {
   client.poll();
+  // Serial.println("Sending message");
+  //Check message buffer
+  /*if (!msg_buf.empty())
+  {
+    //buffer not empty
+    //TODO decode messages
+    semilimes_message_t m = msg_buf.get();
+    String body = JSON.stringify(m.body);
+    
+  }*/
+  // client.send(semilimes.SendTextMessage(myToken, ChannelId, "Hello, It's me"));
+  // delay(1000);
 }

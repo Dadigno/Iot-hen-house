@@ -1,5 +1,62 @@
 #include "semilimes.h"
 
+semilimes_message_t JSON_decode(String payload, bool verbose)
+{
+	JSONVar myObject = JSON.parse(payload);
+	semilimes_message_t new_message;
+	// JSON.typeof(jsonVar) can be used to get the type of the var
+	if (JSON.typeof(myObject) == "undefined")
+	{
+		Serial.println("Parsing input failed!");
+	}
+	else
+	{
+		
+		new_message.conversation = myObject["ConversationID"];
+		new_message.sender_id = myObject["SenderID"];
+		new_message.client_id = myObject["ClientID"];
+		new_message.message_id = myObject["MessageID"];
+		new_message.body = myObject["Body"];
+
+		if (verbose)
+		{
+			if (myObject.hasOwnProperty("ConversationID"))
+			{
+				Serial.print("myObject[\"ConversationID\"] = ");
+				Serial.println(myObject["ConversationID"]);
+			}
+			if (myObject.hasOwnProperty("SenderID"))
+			{
+				Serial.print("myObject[\"SenderID\"] = ");
+				Serial.println(myObject["SenderID"]);
+			}
+			if (myObject.hasOwnProperty("ClientID"))
+			{
+				Serial.print("myObject[\"ClientID\"] = ");
+				Serial.println(myObject["ClientID"]);
+			}
+			if (myObject.hasOwnProperty("MessageID"))
+			{
+				Serial.print("myObject[\"MessageID\"] = ");
+				Serial.println(myObject["MessageID"]);
+			}
+			if (myObject.hasOwnProperty("Body"))
+			{
+				Serial.print("myObject[\"Body\"] = ");
+				Serial.println(myObject["Body"]);
+			}
+		}
+	}
+	return new_message;
+}
+
+
+
+
+semilimes::semilimes(){
+  
+}
+
 String semilimes::SendTextMessage(String AuthToken, String ReceiverID, String Body)
 {
   String TypeID = "590E4E6C-2C5D-47E8-8F38-311D5A299EE7";
