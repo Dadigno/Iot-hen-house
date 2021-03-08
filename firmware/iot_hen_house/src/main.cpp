@@ -89,14 +89,14 @@ void setup()
   client.connect(websockets_connection_string);
 
   String Body = "This message from ESP32 using the wss Semilimes libs";
-  client.send(semilimes.SendTextMessage(myToken, ChannelId, Body));
+  client.send(semilimes.SendTxtMsg(myToken, ChannelId, semilimes_channel, Body));
 
 }
 
 void loop()
 {
   client.poll();
-  // Serial.println("Sending message");
+  Serial.println("Sending message");
   //Check message buffer
   /*if (!msg_buf.empty())
   {
@@ -106,6 +106,6 @@ void loop()
     String body = JSON.stringify(m.body);
     
   }*/
-  // client.send(semilimes.SendTextMessage(myToken, ChannelId, "Hello, It's me"));
-  // delay(1000);
+  client.send(semilimes.SendTxtMsg(myToken, ChannelId, semilimes_channel, "Hi there!"));
+  delay(1000);
 }

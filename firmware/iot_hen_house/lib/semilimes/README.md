@@ -1,5 +1,5 @@
 
-# semilimes client- Arduino library for ESP32
+# semilimes client - Arduino library for ESP32 and ESP8266
 [![Platform](https://img.shields.io/badge/platform-Arduino--IDE-red)](https://nodered.org)   [![Downloads](https://img.shields.io/badge/download-github-purple)](https://github.com/pernicious-flier/Arduino-semilimes-connector) [![arduino-library-badge](https://www.ardu-badge.com/badge/semilimes_connector.svg?)](https://www.ardu-badge.com/semilimes_connector)  [![Device](https://img.shields.io/badge/Device-ESP32-blue)](https://www.espressif.com/en/products/socs/esp32) [![License](https://img.shields.io/badge/license-GPLv3-yellow)](https://www.gnu.org/licenses/gpl-3.0.html)
 
 This library contains some helper functions that implements the semilimes api. It has to be used as a  connector to a specific semilimes channel. The only thing required is the `token` and the `Channel ID` that can be retrieved by the semilimes app.
@@ -30,9 +30,9 @@ The following message contents can be sent and received
 - **SendSelectOptions** - content is a title followed by buttons to make a choice
 - **SendLocation** - content is an object with latitude and longitude
 - **SendHTML** - content is an object that embed an HTML script
-- **PickLocation** - content is an object that enable the user to choose a location
-- **PickDate** - content is an object that enable the user to choose a Date
-- **PickTime** - content is an object that enable the user to choose a Time
+- **ReceiveLocation** - content is an object that enable the user to choose a location
+- **ReceiveDate** - content is an object that enable the user to choose a Date
+- **ReceiveTime** - content is an object that enable the user to choose a Time
 - **SendJSON** - content is a JSON and depends on the msg type (check the semilimes API)
 
 
@@ -52,7 +52,8 @@ The *SendSelectOptions()* function is used to send a choice to the selected chan
 	String semilimes::SendSelectOptions(String AuthToken, String ReceiverID, String Body, String* OptionTexts, String* OptionValues, int OptionsNumber);
 	
 	AuthToken: the authentication token related to your semilimes account
-	ReceiverID: this is the channelID where you want to send the message
+	ReceiverID: this is the UserID or a ChannelID where you want to send the message
+	dest_type: this is to declare if the ID is a UserID or a ChannelID
 	Body: is the title of the message
 	OptionsTexts: is a pointer to the array of the Options name
 	OptionsValue: is a pointer to the array of the Options value
@@ -63,10 +64,11 @@ The *SendSelectOptions()* function is used to send a choice to the selected chan
 The *SendLocation* node is used to send a location to the selected channel, it will be displayed as a marker on a map.
 
 
-	String semilimes::SendLocation(String AuthToken, String ReceiverID, String Body, String latitude, String longitude);
+	String semilimes::SendLocation(String AuthToken, String ReceiverID, int dest_type, String Body, String latitude, String longitude);
 	
 	AuthToken: the authentication token related to your semilimes account
-	ReceiverID: this is the channelID where you want to send the message
+	ReceiverID: this is the UserID or a ChannelID where you want to send the message
+	dest_type: this is to declare if the ID is a UserID or a ChannelID
 	Body: is the title of the message
 	latitude: is the latitude of the location
 	longitude: is the longitude of the location
@@ -74,37 +76,41 @@ The *SendLocation* node is used to send a location to the selected channel, it w
 #### SendHTML function
 The *SendHTML* function is used to embed and send an HTML script within a message, the HTML will be rendered in the channel. 
 
-	String semilimes::SendHTML(String AuthToken, String ReceiverID, String Body);
+	String semilimes::SendHTML(String AuthToken, String ReceiverID, int dest_type, String Body);
 	
 	AuthToken: the authentication token related to your semilimes account
-	ReceiverID: this is the channelID where you want to send the message
+	ReceiverID: this is the UserID or a ChannelID where you want to send the message
+	dest_type: this is to declare if the ID is a UserID or a ChannelID
 	Body: is the HTML script
 
-#### PickLocation function
-The *PickLocation* function is meant to permit the user to choose a location on the map. Sending this message on a selected channel, a map will be shown and a user could pick a place on the map and send it back to the client. 
+#### ReceiveLocation function
+The *ReceiveLocation* function is meant to permit the user to choose a location on the map. Sending this message on a selected channel, a map will be shown and a user could pick a place on the map and send it back to the client. 
 
-	String semilimes::PickLocation(String AuthToken, String ReceiverID, String Body);
+	String semilimes::PickLocation(String AuthToken, String ReceiverID, int dest_type, String Body);
 	
 	AuthToken: the authentication token related to your semilimes account
-	ReceiverID: this is the channelID where you want to send the message
+	ReceiverID: this is the UserID or a ChannelID where you want to send the message
+	dest_type: this is to declare if the ID is a UserID or a ChannelID
 	Body: is the title of the message
 
-#### PickDate function
-The *PickDate* function is meant to permit the user to choose a Date on the calendar. Sending this message on a selected channel, a calendar will be shown and a user could pick a date and send it back to the client. 
+#### ReceiveDate function
+The *ReceiveDate* function is meant to permit the user to choose a Date on the calendar. Sending this message on a selected channel, a calendar will be shown and a user could pick a date and send it back to the client. 
 
-	String semilimes::PickDate(String AuthToken, String ReceiverID, String Body);
+	String semilimes::PickDate(String AuthToken, String ReceiverID, int dest_type, String Body);
 	
 	AuthToken: the authentication token related to your semilimes account
-	ReceiverID: this is the channelID where you want to send the message
+	ReceiverID: this is the UserID or a ChannelID where you want to send the message
+	dest_type: this is to declare if the ID is a UserID or a ChannelID
 	Body: is the title of the message
 
-#### PickTime function
-The *PickTime* function is meant to permit the user to choose a time. Sending this message on a selected channel, a clock will be shown and a user could choose a time and send it back to the client. 
+#### ReceiveTime function
+The *ReceiveTime* function is meant to permit the user to choose a time. Sending this message on a selected channel, a clock will be shown and a user could choose a time and send it back to the client. 
 
-	String semilimes::PickTime(String AuthToken, String ReceiverID, String Body);
+	String semilimes::PickTime(String AuthToken, String ReceiverID, int dest_type, String Body);
 	
 	AuthToken: the authentication token related to your semilimes account
-	ReceiverID: this is the channelID where you want to send the message
+	ReceiverID: this is the UserID or a ChannelID where you want to send the message
+	dest_type: this is to declare if the ID is a UserID or a ChannelID
 	Body: is the title of the message
 
 In order to use the node it is necessary to feed it with a string which will be the text part of the message. 
@@ -112,10 +118,11 @@ In order to use the node it is necessary to feed it with a string which will be 
 #### SendJSON function
 The *SendJSON* function is ment to be used to connect to the server sending the whole JSON message. To use this node you have to check the semilimes API for the syntax and the message type that could be sent.
 
-	String semilimes::SendJSON(String AuthToken, String ReceiverID, String TypeID, String Body);
+	String semilimes::SendJSON(String AuthToken, String ReceiverID, int dest_type, String TypeID, String Body);
 	
 	AuthToken: the authentication token related to your semilimes account
-	ReceiverID: this is the channelID where you want to send the message
+	ReceiverID: this is the UserID or a ChannelID where you want to send the message
+	dest_type: this is to declare if the ID is a UserID or a ChannelID
 	Body: is the JSON script
 	
 This function could be used to send any kind of message supported by the API. The example project shiws how to sends an HTML script embedded into the JSON. 
@@ -126,10 +133,11 @@ This function could be used to send any kind of message supported by the API. Th
 #### SendRestfulMessageRequest function
 The *SendJSON* function is ment to be used to connect to the server sending the whole JSON message. To use this node you have to check the semilimes API for the syntax and the message type that could be sent.
 
-	String semilimes::SendRestfulMessageRequest(String token, String ReceiverId, String msg);
+	String semilimes::SendRestfulMessageRequest(String token, String ReceiverId, int dest_type, String msg);
 	
 	AuthToken: the authentication token related to your semilimes account
-	ReceiverID: this is the channelID where you want to send the message
+	ReceiverID: this is the UserID or a ChannelID where you want to send the message
+	dest_type: this is to declare if the ID is a UserID or a ChannelID
 	Body: is the JSON script
 	
 This function could be used to send any kind of message supported by the API. The example project shiws how to sends an HTML script embedded into the JSON. 
