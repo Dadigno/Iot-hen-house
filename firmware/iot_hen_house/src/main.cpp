@@ -3,28 +3,26 @@
 #include <WiFi.h>
 #include <semilimes.h>
 #include "secret.h" // import wifi credentials, token and channel ID
-#include <circular_buffer.h>
 #include <Arduino_JSON.h>
 
 #define WIFI_CONN_TIMEOUT 10 //Sec
+#define BUFF_SIZE 10
 
 using namespace websockets;
 semilimes semilimes;
 
 WebsocketsClient client;
 
-const char *websockets_connection_string = semilimes_wss_server;
-
-circular_buffer<semilimes_message_t> msg_buf(10);
-
 void onMessageCallback(WebsocketsMessage message)
 {
-  Serial.print("Got Message: ");
-  Serial.println(message.data());
+  Serial.println("Got Message: ");
 
-  //semilimes_message_t new_message;
-  //new_message = JSON_decode(message.data(), false);
-  //msg_buf.put(new_message);
+  semilimes_message_t new_message;
+  new_message = JSON_decode(message.data(), false);
+  if (new_message.bodyType != "Event" && new_message.type != "Server") 
+  {
+    Serial.println(message.data());
+  }
 }
 
 void onEventsCallback(WebsocketsEvent event, String data)
@@ -51,7 +49,7 @@ boolean init_wifi()
 {
   // Connect to wifi
   Serial.print("Connecting to ");
-  Serial.println(ssid);
+  Serial.print(ssid);
 
   WiFi.begin(ssid, password);
 
@@ -83,29 +81,23 @@ void setup()
   client.onMessage(onMessageCallback);
 
   // run callback when events are occuring
-  client.onEvent(onEventsCallback);
+  //client.onEvent(onEventsCallback);
 
   // Connect to semilimes server
-  client.connect(websockets_connection_string);
+  client.connect(semilimes_wss_server);
 
-  String Body = "This message from ESP32 using the wss Semilimes libs";
-  client.send(semilimes.SendTxtMsg(myToken, ChannelId, semilimes_channel, Body));
+  client.send(semilimes.SendTxtMsg(myToken, ChannelId, semilimes_channel, "ESP8266 started!"));
 
+  String body = "Selection";
+  String OptionTexts[4] = {"Blue", "Red", "Orange", "Yellow"};
+  String OptionValues[4] = {"A", "B", "C", "D"};
+
+  client.send(semilimes.SendSelectOpt(myToken, ChannelId, semilimes_channel, body, OptionTexts, OptionValues, sizeof(OptionTexts) / sizeof(*OptionTexts)));
 }
 
 void loop()
 {
   client.poll();
-  Serial.println("Sending message");
-  //Check message buffer
-  /*if (!msg_buf.empty())
-  {
-    //buffer not empty
-    //TODO decode messages
-    semilimes_message_t m = msg_buf.get();
-    String body = JSON.stringify(m.body);
-    
-  }*/
-  client.send(semilimes.SendTxtMsg(myToken, ChannelId, semilimes_channel, "Hi there!"));
-  delay(1000);
+
+  delay(10);
 }

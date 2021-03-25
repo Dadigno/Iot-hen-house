@@ -22,6 +22,8 @@ typedef struct
 	JSONVar client_id;
 	JSONVar message_id;
 	JSONVar body;
+	JSONVar bodyType;
+	JSONVar type;
 } semilimes_message_t;
 
 semilimes_message_t JSON_decode(String payload, bool verbose);

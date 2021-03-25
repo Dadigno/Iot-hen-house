@@ -17,6 +17,8 @@ semilimes_message_t JSON_decode(String payload, bool verbose)
 		new_message.client_id = myObject["ClientID"];
 		new_message.message_id = myObject["MessageID"];
 		new_message.body = myObject["Body"];
+    new_message.bodyType = myObject["BodyType"];
+    new_message.type = myObject["Type"]; 
 
 		if (verbose)
 		{
