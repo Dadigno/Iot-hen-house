@@ -74,7 +74,7 @@ U 1 1 5FC10810
 P 2500 1500
 F 0 "C1" H 2618 1546 50  0000 L CNN
 F 1 "330uF" H 2618 1455 50  0000 L CNN
-F 2 "Capacitor_THT:CP_Radial_D22.0mm_P10.00mm_SnapIn" H 2538 1350 50  0001 C CNN
+F 2 "Capacitor_THT:CP_Radial_D8.0mm_P2.50mm" H 2538 1350 50  0001 C CNN
 F 3 "~" H 2500 1500 50  0001 C CNN
 	1    2500 1500
 	1    0    0    -1  
@@ -1375,4 +1375,48 @@ Wire Wire Line
 Connection ~ 2000 1250
 Wire Wire Line
 	2000 1250 2500 1250
+$Comp
+L Mechanical:MountingHole H3
+U 1 1 608817C4
+P 9200 4950
+F 0 "H3" H 9300 4996 50  0000 L CNN
+F 1 "MountingHole" H 9300 4905 50  0000 L CNN
+F 2 "MountingHole:MountingHole_3.2mm_M3_Pad_Via" H 9200 4950 50  0001 C CNN
+F 3 "~" H 9200 4950 50  0001 C CNN
+	1    9200 4950
+	1    0    0    -1  
+$EndComp
+$Comp
+L Mechanical:MountingHole H1
+U 1 1 60882202
+P 8450 4950
+F 0 "H1" H 8550 4996 50  0000 L CNN
+F 1 "MountingHole" H 8550 4905 50  0000 L CNN
+F 2 "MountingHole:MountingHole_3.2mm_M3_Pad_Via" H 8450 4950 50  0001 C CNN
+F 3 "~" H 8450 4950 50  0001 C CNN
+	1    8450 4950
+	1    0    0    -1  
+$EndComp
+$Comp
+L Mechanical:MountingHole H4
+U 1 1 6088299C
+P 9200 5450
+F 0 "H4" H 9300 5496 50  0000 L CNN
+F 1 "MountingHole" H 9300 5405 50  0000 L CNN
+F 2 "MountingHole:MountingHole_3.2mm_M3_Pad_Via" H 9200 5450 50  0001 C CNN
+F 3 "~" H 9200 5450 50  0001 C CNN
+	1    9200 5450
+	1    0    0    -1  
+$EndComp
+$Comp
+L Mechanical:MountingHole H2
+U 1 1 6088337D
+P 8450 5450
+F 0 "H2" H 8550 5496 50  0000 L CNN
+F 1 "MountingHole" H 8550 5405 50  0000 L CNN
+F 2 "MountingHole:MountingHole_3.2mm_M3_Pad_Via" H 8450 5450 50  0001 C CNN
+F 3 "~" H 8450 5450 50  0001 C CNN
+	1    8450 5450
+	1    0    0    -1  
+$EndComp
 $EndSCHEMATC
