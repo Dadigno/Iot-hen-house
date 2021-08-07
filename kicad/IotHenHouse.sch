@@ -728,17 +728,6 @@ Wire Wire Line
 Wire Wire Line
 	1050 4100 1550 4100
 $Comp
-L power:+28V #PWR0104
-U 1 1 60471F3E
-P 1050 3800
-F 0 "#PWR0104" H 1050 3650 50  0001 C CNN
-F 1 "+28V" H 1065 3973 50  0000 C CNN
-F 2 "" H 1300 3850 50  0001 C CNN
-F 3 "" H 1300 3850 50  0001 C CNN
-	1    1050 3800
-	1    0    0    -1  
-$EndComp
-$Comp
 L Device:LED D8
 U 1 1 60476A37
 P 2300 4250
@@ -806,7 +795,6 @@ $EndComp
 Wire Wire Line
 	1550 4150 1550 4100
 Connection ~ 1550 4100
-Connection ~ 1050 3800
 $Comp
 L power:+3.3V #PWR0107
 U 1 1 604856BC
@@ -1419,4 +1407,18 @@ F 3 "~" H 8450 5450 50  0001 C CNN
 	1    8450 5450
 	1    0    0    -1  
 $EndComp
+$Comp
+L power:+5V #PWR0104
+U 1 1 610CFAA2
+P 1050 3750
+F 0 "#PWR0104" H 1050 3600 50  0001 C CNN
+F 1 "+5V" H 1065 3923 50  0000 C CNN
+F 2 "" H 1050 3750 50  0001 C CNN
+F 3 "" H 1050 3750 50  0001 C CNN
+	1    1050 3750
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1050 3750 1050 3800
+Connection ~ 1050 3800
 $EndSCHEMATC

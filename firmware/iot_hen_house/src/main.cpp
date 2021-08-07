@@ -2,9 +2,9 @@
 #include <ArduinoWebsockets.h>
 #include <WiFi.h>
 #include <semilimes.h>
-#include "secret.h" // import wifi credentials, token and channel ID
 #include <Arduino_JSON.h>
 
+#include "secret.h" // import wifi credentials, token and channel ID
 #define WIFI_CONN_TIMEOUT 10 //Sec
 #define BUFF_SIZE 10
 
@@ -88,6 +88,7 @@ void setup()
 
   client.send(semilimes.SendTxtMsg(myToken, ChannelId, semilimes_channel, "ESP8266 started!"));
 
+  //Message test
   String body = "Selection";
   String OptionTexts[4] = {"Blue", "Red", "Orange", "Yellow"};
   String OptionValues[4] = {"A", "B", "C", "D"};
